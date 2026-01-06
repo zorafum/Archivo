@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>contacto</title>
+
+  <style>
+    /* RESET */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Helvetica, Arial, sans-serif; }
+
+    body { background: #fff; color: #000; overflow-x: hidden; cursor: default; }
+    a { text-decoration: none; color: inherit; }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      z-index: 100;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .logo { font-weight: 700; letter-spacing: 1px; }
+
+    nav a {
+      margin-left: 30px;
+      font-weight: 300;
+      color: #FA7BB3;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+    nav a:hover { font-weight: 700; font-style: italic; }
+
+    main { padding-top: 120px; }
+    .wrap { padding: 40px; }
+
+    /* TÍTULO */
+    .title {
+      font-size: 160px;
+      font-weight: 900;
+      line-height: 0.9;
+      margin-bottom: 26px;
+    }
+
+    /* LAYOUT: imagen a la izquierda + texto a la derecha, SIN CHOCAR */
+    .grid {
+      display: grid;
+      grid-template-columns: 420px 1fr; /* imagen más pequeña */
+      gap: 44px;                        /* aire real entre imagen y texto */
+      align-items: start;
+    }
+
+    /* PANEL IMAGEN (más pequeño y centrado dentro de su columna) */
+    .panel {
+      position: relative;
+      width: 420px;
+      min-height: 420px;
+      padding-left: 24px; /* la empuja un poco a la derecha sin invadir el texto */
+    }
+
+    .stamp {
+      position: absolute;
+      left: 24px;
+      top: 0;
+      width: 360px;     /* imagen MÁS pequeña */
+      height: 360px;
+      border: 1px solid rgba(0,0,0,0.10);
+      background: #fff;
+      overflow: hidden;
+      animation: drift 10s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    .stamp img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    @keyframes drift {
+      0%   { transform: translate(0,0) rotate(0deg); }
+      25%  { transform: translate(10px,-8px) rotate(0.5deg); }
+      50%  { transform: translate(-8px,12px) rotate(-0.5deg); }
+      75%  { transform: translate(12px,6px) rotate(0.35deg); }
+      100% { transform: translate(0,0) rotate(0deg); }
+    }
+
+    /* TEXTO: alineado y justificado a la izquierda (sin guiones) */
+    .contact {
+      width: 100%;
+      text-align: left;
+      padding-top: 6px;
+      max-width: 560px; /* evita líneas demasiado largas */
+    }
+
+    .contact p {
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.65;
+      opacity: 0.95;
+      text-align: left;
+      margin-bottom: 16px;
+
+      hyphens: none;
+      word-break: normal;
+      overflow-wrap: normal;
+    }
+
+    .label {
+      font-size: 14px;
+      letter-spacing: 1px;
+      opacity: 0.55;
+      margin-top: 14px;
+      margin-bottom: 8px;
+      text-align: left;
+    }
+
+    .contact a.link {
+      display: inline-block;
+      font-size: 18px;
+      font-weight: 300;
+      letter-spacing: 0.2px;
+      width: fit-content;
+      opacity: 0.98;
+    }
+
+    .contact a.link:hover {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* NOTAS MUSICALES */
+    .note {
+      position: absolute;
+      pointer-events: none;
+      animation: floatUp 1.5s ease-out forwards;
+      color: black;
+      z-index: 2000;
+    }
+    @keyframes floatUp {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-40px); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1100px) {
+      .title { font-size: 90px; }
+      .grid { grid-template-columns: 1fr; gap: 22px; }
+      .panel { width: 100%; min-height: 420px; padding-left: 0; }
+      .stamp { left: 0; width: 420px; height: 420px; position: relative; }
+      .contact { max-width: 100%; }
+    }
+
+    @media (max-width: 768px) {
+      header { padding: 18px 18px; }
+      .wrap { padding: 22px; }
+      nav a { margin-left: 16px; }
+      .title { font-size: 70px; }
+      .contact p, .contact a.link { font-size: 16px; }
+      .label { font-size: 13px; }
+      .stamp { width: 320px; height: 320px; }
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="logo"><a href="index.html">archivo</a></div>
+  <nav>
+    <a href="index.html">inicio</a>
+    <a href="portfolio.html">portfolio</a>
+    <a href="sobremi.html">sobre mí</a>
+    <a href="contacto.html">contacto</a>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1 class="title">contacto</h1>
+
+    <div class="grid">
+      <!-- Imagen (más pequeña) -->
+      <div class="panel" aria-label="imagen contacto">
+        <div class="stamp"><img src="images/sara1.png" alt="sara1"></div>
+      </div>
+
+      <!-- Texto (izquierda, sin chocar con imagen) -->
+      <aside class="contact">
+        <p>
+          Si quieres colaborar, proponer un encargo o pedir portfolio en PDF, escríbeme.
+        </p>
+
+        <div class="label">correo</div>
+        <a class="link" href="mailto:pontekapuxa@gmail.com">pontekapuxa@gmail.com</a>
+
+        <div class="label" style="margin-top:18px;">instagram</div>
+        <a class="link"
+           href="https://www.instagram.com/pontekapuxa?igsh=YnV0b3B1anN3NzB0"
+           target="_blank" rel="noopener noreferrer">
+          @pontekapuxa
+        </a>
+
+        <div class="label" style="margin-top:18px;">nota</div>
+        <p style="opacity:0.8; margin-bottom:0;">
+          Respondo más rápido si el mensaje incluye: idea + fecha + presupuesto aproximado.
+        </p>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<script>
+  /* NOTAS MUSICALES AL CLICK */
+  const notes = ["𝅘𝅥", "𝅘𝅥𝅮", "𝅘𝅥𝅯", "𝅘𝅥𝅰"];
+  document.addEventListener("click", (e) => {
+    const note = document.createElement("div");
+    note.className = "note";
+    note.textContent = notes[Math.floor(Math.random() * notes.length)];
+    note.style.left = e.pageX + "px";
+    note.style.top = e.pageY + "px";
+    note.style.fontSize = Math.floor(Math.random() * 20 + 14) + "px";
+    document.body.appendChild(note);
+    setTimeout(() => note.remove(), 1500);
+  });
+</script>
+
+</body>
+</html>
