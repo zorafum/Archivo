@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    /* RESET + BASE (brutalista como index) */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Helvetica, Arial, sans-serif; }
+    body { background: #fff; color: #000; overflow-x: hidden; cursor: default; }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: rgba(250,123,179,0.25); }
+
+    /* HEADER */
+    header{
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      z-index: 100;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .logo { font-weight: 700; letter-spacing: 1px; }
+    nav a{
+      margin-left: 30px;
+      font-weight: 300;
+      color: #FA7BB3;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+    nav a:hover{ font-weight: 700; font-style: italic; }
+
+    main{ padding-top: 110px; }
+
+    /* SECCIONES */
+    .section{
+      padding: 80px 40px 70px;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      scroll-margin-top: 120px;
+    }
+
+    /* TEXTO A LA DERECHA EN TODA LA PÁGINA */
+    .section h2,
+    .section p,
+    .meta,
+    .hint{
+      text-align: right;
+    }
+
+    /* Alineación de bloque hacia la derecha (para que no quede “centrado” raro) */
+    .section p,
+    .meta,
+    .hint{
+      margin-left: auto;        /* empuja el bloque hacia la derecha */
+      max-width: 760px;
+    }
+
+    .section h2{
+      font-size: 56px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      line-height: 0.95;
+      margin-bottom: 12px;
+    }
+    .section p{
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      opacity: 0.9;
+      margin-bottom: 12px;
+    }
+    .meta{
+      font-size: 12px;
+      font-weight: 300;
+      opacity: 0.55;
+      margin-bottom: 22px;
+    }
+
+    /* CARRUSEL INFINITO */
+    .carousel{ overflow: hidden; width: 100%; }
+    .track{
+      display: flex;
+      gap: 26px;
+      width: max-content;
+      animation: scroll 30s linear infinite;
+      will-change: transform;
+      align-items: flex-start;
+    }
+
+    .section[data-speed="slow"] .track{ animation-duration: 36s; }
+    .section[data-speed="fast"] .track{ animation-duration: 24s; }
+
+    @keyframes scroll{
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ITEM */
+    .item{
+      flex: 0 0 auto;
+      position: relative;
+      cursor: zoom-in;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.10);
+    }
+    .item img{
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* FORMAS */
+    .shape-square{ width: 240px; height: 240px; }
+    .shape-doublepage{ width: 420px; height: 240px; }
+    .shape-rect{ width: 360px; height: 240px; }
+    .shape-portrait-soft{ width: 240px; height: 300px; }
+    .shape-portrait-tall{ width: 240px; height: 360px; }
+    .shape-landscape{ width: 380px; height: 240px; }
+    .shape-portrait{ width: 240px; height: 340px; }
+
+    .hint{
+      margin-top: 12px;
+      font-size: 12px;
+      font-weight: 300;
+      opacity: 0.6;
+    }
+
+    /* LIGHTBOX */
+    .lightbox{
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.92);
+      display: none;
+      z-index: 999;
+    }
+    .lightbox.open{ display: block; }
+
+    .lb-inner{
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+      justify-items: center;
+      padding: 30px;
+      gap: 18px;
+    }
+
+    .lb-inner.with-text{
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      justify-items: stretch;
+      gap: 24px;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .lb-media{
+      position: relative;
+      width: min(980px, 92vw);
+      height: min(680px, 74vh);
+      justify-self: center;
+    }
+    .lb-inner.with-text .lb-media{
+      width: 100%;
+      height: min(680px, 74vh);
+    }
+    .lb-media img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .lb-text{
+      display: none;
+      align-self: center;
+      padding: 18px 16px;
+      border-left: 1px solid rgba(0,0,0,0.12);
+      max-height: 74vh;
+      overflow: auto;
+      text-align: right; /* también a la derecha dentro del panel */
+    }
+    .lb-inner.with-text .lb-text{ display: block; }
+
+    .lb-text h3{
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 10px;
+      letter-spacing: 0.3px;
+      text-align: right;
+    }
+    .lb-text p{
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.7;
+      opacity: 0.9;
+      text-align: right;
+    }
+
+    .lb-controls{
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .lb-btn{
+      pointer-events: auto;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 1px solid rgba(0,0,0,0.15);
+      background: rgba(255,255,255,0.92);
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      user-select: none;
+      font-size: 18px;
+      font-weight: 900;
+    }
+    .lb-prev{ left: 26px; }
+    .lb-next{ right: 26px; }
+
+    .lb-close{
+      pointer-events: auto;
+      position: absolute;
+      top: 22px;
+      right: 26px;
+      border: 1px solid rgba(0,0,0,0.15);
+      background: rgba(255,255,255,0.92);
+      padding: 10px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: lowercase;
+    }
+
+    /* NOTAS MUSICALES */
+    .note{
+      position: absolute;
+      pointer-events: none;
+      animation: floatUp 1.5s ease-out forwards;
+      color: black;
+      z-index: 2000; /* por encima de todo */
+    }
+    @keyframes floatUp{
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-40px); }
+    }
+
+    /* Responsive */
+    @media (max-width: 900px){
+      header{ padding: 18px 18px; }
+      nav a{ margin-left: 16px; }
+      .section{ padding: 64px 18px 58px; }
+      .section h2{ font-size: 38px; }
+
+      .shape-doublepage{ width: 360px; height: 210px; }
+      .shape-rect{ width: 320px; height: 210px; }
+      .shape-landscape{ width: 340px; height: 210px; }
+
+      .lb-inner.with-text{ grid-template-columns: 1fr; }
+      .lb-text{ border-left: none; border-top: 1px solid rgba(0,0,0,0.12); }
+      .lb-media{ width: 92vw; height: 58vh; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo"><a href="index.html">archivo</a></div>
+  <nav>
+    <a href="index.html">inicio</a>
+    <a href="portfolio.html">portfolio</a>
+    <a href="sobremi.html">sobre mí</a>
+    <a href="contacto.html">contacto</a>
+    
+  </nav>
+</header>
+
+<main>
+
+ <!-- EDITORIAL -->
+<section class="section" id="editorial" data-speed="slow">
+  <h2>Piti Woman </h2>
+  <p>
+    La revista Piti Woman referencia a Pretty Woman (1990) y es la representación editorial de las bromas internas, intereses y críticas que atravesamos mis amigas y yo. Un proyecto de maquetación ácido, construido desde un lenguaje cifrado. La revista, además, recolecta artículos feministas y políticos, creando un catálogo de risas para las que más quiero.
+
+  </p>
+  <div class="meta"></div>
+
+  <div class="carousel" data-gallery="editorial">
+    <div class="track">
+      <div class="item shape-square">
+        <img src="images/editorial1.jpg" alt="editorial1">
+      </div>
+
+      <div class="item shape-doublepage">
+        <img src="images/editorial2.jpg" alt="editorial2">
+      </div>
+
+      <div class="item shape-doublepage">
+        <img src="images/editorial3.jpg" alt="editorial3">
+      </div>
+
+      <div class="item shape-doublepage">
+        <img src="images/editorial4.jpg" alt="editorial4">
+      </div>
+
+      <div class="item shape-doublepage">
+        <img src="images/editorial5.jpg" alt="editorial5">
+      </div>
+
+      <div class="item shape-doublepage">
+        <img src="images/editorial6.jpg" alt="editorial6">
+      </div>
+
+      <div class="item shape-doublepage">
+        <img src="images/editorial7.jpg" alt="editorial7">
+      </div>
+
+      <div class="item shape-doublepage">
+        <img src="images/editorial8.jpg" alt="editorial8">
+      </div>
+
+      <div class="item shape-doublepage">
+        <img src="images/editorial9.jpg" alt="editorial9">
+      </div>
+
+      <div class="item shape-doublepage">
+        <img src="images/editorial10.jpg" alt="editorial10">
+      </div>
+
+      <div class="item shape-doublepage">
+        <img src="images/editorial11.jpg" alt="editorial11">
+      </div>
+    </div>
+
+    <div class="hint"></div>
+  </
+
+  <!-- INFOGRAFÍA -->
+  <section class="section" id="infografia" data-speed="fast">
+    <h2>Infografía</h2>
+    <p>
+      Mis infografías pretenden representar temas interesantes, políticos y sociales a través del diseño gráfico, la maquetación y la edición fotográfica, apoyándose en la iconografía, la edición visual y el uso de metáforas gráficas para comunicar la información de forma clara, sintética y crítica.
+
+    </p>
+    <div class="meta"></div>
+
+    <div class="carousel" data-gallery="infografia" data-has-text="true">
+      <div class="track">
+        <div class="item shape-rect" data-caption="info1 — añade aquí una breve explicación (objetivo, contexto, decisión visual).">
+          <img src="images/info1.jpg" alt="info1">
+        </div>
+        <div class="item shape-doublepage" data-caption="info2 — texto breve: qué cuenta la pieza y cómo se lee.">
+          <img src="images/info2.jpg" alt="info2">
+        </div>
+        <div class="item shape-doublepage" data-caption="info3 — texto breve: datos, sistema, iconos, narrativa.">
+          <img src="images/info3.jpg" alt="info3">
+        </div>
+        <div class="item shape-square" data-caption="info4 — texto breve: herramientas, proceso, versión final.">
+          <img src="images/info4.jpg" alt="info4">
+        </div>
+        <div class="item shape-square" data-caption="info5 — texto breve: variaciones, detalle o aplicación.">
+          <img src="images/info5.jpg" alt="info5">
+        </div>
+      </div>
+      <div class="hint"></div>
+    </div>
+  </section>
+
+  <!-- TÉXTIL -->
+  <section class="section" id="textil" data-speed="slow">
+    <h2>Pontekapuxa</h2>
+    <p>
+      Hace dos años empecé mi propio negocio textil de ganchillo. En él creo, en su mayoría, accesorios para la cabeza con formas divertidas y coloridas. En las sesiones fotográficas se aprecian los conjuntos de tres piezas que realicé. Estos productos se comercializan principalmente a través de Vinted.
+
+    </p>
+    <div class="meta"></div>
+
+    <div class="carousel" data-gallery="textil">
+      <div class="track">
+        <div class="item shape-portrait-soft"><img src="images/textil1.png" alt="textil1"></div>
+        <div class="item shape-portrait-soft"><img src="images/textil2.png" alt="textil2"></div>
+        <div class="item shape-portrait-soft"><img src="images/textil3.png" alt="textil3"></div>
+
+        <div class="item shape-portrait-tall"><img src="images/textil4.jpg" alt="textil4"></div>
+        <div class="item shape-portrait-tall"><img src="images/textil5.jpg" alt="textil5"></div>
+        <div class="item shape-portrait-tall"><img src="images/textil6.jpg" alt="textil6"></div>
+        <div class="item shape-portrait-tall"><img src="images/textil7.jpg" alt="textil7"></div>
+        <div class="item shape-portrait-tall"><img src="images/textil8.jpg" alt="textil8"></div>
+        <div class="item shape-portrait-tall"><img src="images/textil9.jpg" alt="textil9"></div>
+        <div class="item shape-portrait-tall"><img src="images/textil10.jpg" alt="textil10"></div>
+        <div class="item shape-portrait-tall"><img src="images/textil11.jpg" alt="textil11"></div>
+        <div class="item shape-portrait-tall"><img src="images/textil12.jpg" alt="textil12"></div>
+        <div class="item shape-portrait-tall"><img src="images/textil13.jpg" alt="textil13"></div>
+      </div>
+      <div class="hint"></div>
+    </div>
+  </section>
+
+  <!-- MERCADILLO -->
+  <section class="section" id="mercadillo" data-speed="fast">
+    <h2>Mercadillo de amigas </h2>
+    <p>
+      Como proyecto colectivo se propuso realizar una serie de talleres grupales. Mercadillo de amigas surgió como un espacio para el intercambio de prendas que ya no queríamos, una forma de darles nueva vida a través del trueque. Como segunda parte del taller, se creó un espacio de upcycling con retales, una zona para pintar la ropa sobrante y una sección de impresión y planchado. Toda la ropa fue intercambiada, customizada o, finalmente, reciclada.
+    </p>
+    <div class="meta"></div>
+
+    <div class="carousel" data-gallery="mercadillo">
+      <div class="track">
+        <div class="item shape-portrait"><img src="images/mercadillo1.jpg" alt="mercadillo1"></div>
+
+        <div class="item shape-landscape"><img src="images/mercadillo2.jpg" alt="mercadillo2"></div>
+        <div class="item shape-landscape"><img src="images/mercadillo3.jpg" alt="mercadillo3"></div>
+        <div class="item shape-landscape"><img src="images/mercadillo4.jpg" alt="mercadillo4"></div>
+        <div class="item shape-landscape"><img src="images/mercadillo5.jpg" alt="mercadillo5"></div>
+        <div class="item shape-landscape"><img src="images/mercadillo6.jpg" alt="mercadillo6"></div>
+
+        <!-- Si existe mercadillo7, descomenta y ponle forma según sea -->
+        <!-- <div class="item shape-portrait"><img src="images/mercadillo7.jpg" alt="mercadillo7"></div> -->
+
+        <div class="item shape-portrait"><img src="images/mercadillo8.jpg" alt="mercadillo8"></div>
+        <div class="item shape-portrait"><img src="images/mercadillo9.jpg" alt="mercadillo9"></div>
+        <div class="item shape-portrait"><img src="images/mercadillo10.jpg" alt="mercadillo10"></div>
+        <div class="item shape-portrait"><img src="images/mercadillo11.jpg" alt="mercadillo11"></div>
+        <div class="item shape-portrait"><img src="images/mercadillo12.jpg" alt="mercadillo12"></div>
+        <div class="item shape-portrait"><img src="images/mercadillo13.jpg" alt="mercadillo13"></div>
+      </div>
+      <div class="hint"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Lightbox (global) -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <div class="lb-inner" id="lbInner">
+    <div class="lb-media">
+      <img id="lbImg" src="" alt="">
+    </div>
+    <aside class="lb-text" id="lbText">
+      <h3 id="lbTitle">Infografía</h3>
+      <p id="lbCaption"></p>
+    </aside>
+  </div>
+
+  <div class="lb-controls">
+    <button class="lb-btn lb-prev" id="lbPrev" aria-label="Anterior">←</button>
+    <button class="lb-btn lb-next" id="lbNext" aria-label="Siguiente">→</button>
+    <button class="lb-close" id="lbClose">cerrar</button>
+  </div>
+</div>
+
+<script>
+  /* NOTAS MUSICALES AL CLICK (igual que index) */
+  const notes = ["𝅘𝅥", "𝅘𝅥𝅮", "𝅘𝅥𝅯", "𝅘𝅥𝅰"];
+  document.addEventListener("click", (e) => {
+    const note = document.createElement("div");
+    note.className = "note";
+    note.textContent = notes[Math.floor(Math.random() * notes.length)];
+    note.style.left = e.pageX + "px";
+    note.style.top = e.pageY + "px";
+    note.style.fontSize = Math.floor(Math.random() * 20 + 14) + "px";
+    document.body.appendChild(note);
+    setTimeout(() => note.remove(), 1500);
+  });
+
+  /*
+    Carrusel infinito:
+    duplico automáticamente los items dentro de cada track para que el -50% sea continuo.
+  */
+  document.querySelectorAll(".track").forEach(track => {
+    const children = Array.from(track.children);
+    children.forEach(ch => track.appendChild(ch.cloneNode(true)));
+  });
+
+  // Lightbox + navegación
+  const lightbox = document.getElementById("lightbox");
+  const lbInner  = document.getElementById("lbInner");
+  const lbImg    = document.getElementById("lbImg");
+  const lbTitle  = document.getElementById("lbTitle");
+  const lbCaption= document.getElementById("lbCaption");
+
+  const btnPrev  = document.getElementById("lbPrev");
+  const btnNext  = document.getElementById("lbNext");
+  const btnClose = document.getElementById("lbClose");
+
+  let currentGallery = null;
+  let currentIndex = 0;
+
+  function getUniqueGalleryItems(galleryName) {
+    const nodes = Array.from(document.querySelectorAll(`[data-gallery="${galleryName}"] .track .item`));
+    const seen = new Set();
+    const unique = [];
+    nodes.forEach(n => {
+      const img = n.querySelector("img");
+      if (!img) return;
+      const src = img.getAttribute("src");
+      if (!seen.has(src)) {
+        seen.add(src);
+        unique.push(n);
+      }
+    });
+    return unique;
+  }
+
+  function openLightbox(galleryName, index) {
+    currentGallery = galleryName;
+    const items = getUniqueGalleryItems(galleryName);
+    currentIndex = Math.max(0, Math.min(index, items.length - 1));
+
+    const item = items[currentIndex];
+    const img = item.querySelector("img");
+    lbImg.src = img.getAttribute("src");
+
+    const carouselEl = document.querySelector(`[data-gallery="${galleryName}"]`);
+    const hasText = carouselEl?.dataset?.hasText === "true";
+
+    if (hasText) {
+      lbInner.classList.add("with-text");
+      lbTitle.textContent = "Infografía";
+      lbCaption.textContent = item.dataset.caption || "Añade aquí un texto breve para esta pieza.";
+    } else {
+      lbInner.classList.remove("with-text");
+      lbCaption.textContent = "";
+    }
+
+    lightbox.classList.add("open");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("open");
+    lightbox.setAttribute("aria-hidden", "true");
+    lbImg.src = "";
+    document.body.style.overflow = "";
+  }
+
+  function step(delta) {
+    if (!currentGallery) return;
+    const items = getUniqueGalleryItems(currentGallery);
+    currentIndex = (currentIndex + delta + items.length) % items.length;
+    openLightbox(currentGallery, currentIndex);
+  }
+
+  document.querySelectorAll(".carousel").forEach(carousel => {
+    const gallery = carousel.getAttribute("data-gallery");
+    carousel.addEventListener("click", (e) => {
+      const item = e.target.closest(".item");
+      if (!item) return;
+
+      const unique = getUniqueGalleryItems(gallery);
+      const src = item.querySelector("img")?.getAttribute("src");
+      const idx = unique.findIndex(u => u.querySelector("img")?.getAttribute("src") === src);
+      openLightbox(gallery, idx >= 0 ? idx : 0);
+    });
+  });
+
+  btnPrev.addEventListener("click", () => step(-1));
+  btnNext.addEventListener("click", () => step(1));
+  btnClose.addEventListener("click", closeLightbox);
+
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (!lightbox.classList.contains("open")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") step(-1);
+    if (e.key === "ArrowRight") step(1);
+  });
+</script>
+
+</body>
+</html>

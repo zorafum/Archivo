@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>sobre mí</title>
+
+  <style>
+    /* RESET */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Helvetica, Arial, sans-serif; }
+
+    body { background: #fff; color: #000; overflow-x: hidden; cursor: default; }
+    a { text-decoration: none; color: inherit; }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      z-index: 100;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .logo { font-weight: 700; letter-spacing: 1px; }
+
+    nav a {
+      margin-left: 30px;
+      font-weight: 300;
+      color: #FA7BB3;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+    nav a:hover { font-weight: 700; font-style: italic; }
+
+    main { padding-top: 120px; }
+    .wrap { padding: 40px; }
+
+    /* TÍTULO */
+    .title {
+      font-size: 160px;
+      font-weight: 900;
+      line-height: 0.9;
+      margin-bottom: 40px;
+    }
+
+    /* BLOQUE SUPERIOR: collage + columna */
+    .top-block {
+      display: grid;
+      grid-template-columns: 1fr 300px; /* menos estrecha */
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* COLLAGE (sin caja, sin borde, sin fondo gris) */
+    .collage {
+      position: relative;
+      width: 100%;
+      max-width: 760px;
+      height: 420px;
+      border: none;
+      background: transparent;
+      overflow: visible;
+    }
+
+    .piece {
+      position: absolute;
+      background: transparent;
+      border: 1px solid rgba(0,0,0,0.10);
+      animation: drift 10s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    .piece img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* piezas */
+    .p1 { left: 0px;   top: 20px;  width: 200px; height: 200px; animation-delay: 0s;   }
+    .p2 { left: 210px; top: 0px;   width: 270px; height: 160px; animation-delay: 0.7s; }
+    .p3 { left: 500px; top: 110px; width: 170px; height: 240px; animation-delay: 1.4s; }
+    .p4 { left: 90px;  top: 230px; width: 330px; height: 140px; animation-delay: 2.1s; }
+
+    /* movimiento visible */
+    @keyframes drift {
+      0%   { transform: translate(0,0) rotate(0deg); }
+      25%  { transform: translate(12px,-10px) rotate(0.6deg); }
+      50%  { transform: translate(-10px,14px) rotate(-0.6deg); }
+      75%  { transform: translate(14px,6px) rotate(0.4deg); }
+      100% { transform: translate(0,0) rotate(0deg); }
+    }
+
+    /* COLUMNA TEXTO: estrecha pero cómoda + sin guiones */
+    .text-column {
+      position: relative;
+      width: 300px;
+      text-align: right;
+      justify-self: end;
+    }
+
+    .text-column p {
+      font-size: 15px;         /* bajamos tamaño */
+      font-weight: 300;
+      line-height: 1.7;
+      text-align: right;
+      opacity: 0.95;
+
+      /* CLAVE: sin cortes con guiones */
+      hyphens: none;
+      word-break: normal;
+      overflow-wrap: normal;
+    }
+
+    /* Nombre en vertical, SIN negrita */
+    .name-vertical {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 1px;
+      margin-left: 10px;
+      display: inline-block;
+      vertical-align: top;
+      font-family: Helvetica, Arial, sans-serif;
+    }
+
+    /* Eliminamos la frase que molestaba (no aparece) */
+    .vertical-word { display: none; }
+
+    /* TEXTO INFERIOR */
+    .bottom-text {
+      margin-top: 50px;
+      max-width: 860px;
+    }
+
+    .bottom-text p {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.8;
+      opacity: 0.92;
+    }
+
+    /* NOTAS MUSICALES */
+    .note {
+      position: absolute;
+      pointer-events: none;
+      animation: floatUp 1.5s ease-out forwards;
+      color: black;
+
+      z-index: 2000;
+    }
+    @keyframes floatUp {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-40px); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1050px) {
+      .title { font-size: 90px; }
+      .top-block { grid-template-columns: 1fr; }
+      .text-column { width: 100%; text-align: left; }
+      .text-column p { text-align: left; }
+      .collage { height: 520px; }
+      .p3 { left: 360px; }
+    }
+
+    @media (max-width: 768px) {
+      header { padding: 18px 18px; }
+      .wrap { padding: 22px; }
+      nav a { margin-left: 16px; }
+      .title { font-size: 70px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo"><a href="index.html">archivo</a></div>
+  <nav>
+    <a href="index.html">inicio</a>
+    <a href="portfolio.html">portfolio</a>
+    <a href="sobremi.html">sobre mí</a>
+    <a href="contacto.html">contacto</a>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1 class="title">sobre mí</h1>
+
+    <div class="top-block">
+      <!-- COLLAGE -->
+      <div class="collage" aria-label="collage animado">
+        <div class="piece p1"><img src="images/sara1.png" alt="sara1"></div>
+        <div class="piece p2"><img src="images/sara2.png" alt="sara2"></div>
+        <div class="piece p3"><img src="images/sara3.jpg" alt="sara3"></div>
+        <div class="piece p4"><img src="images/sara4.png" alt="sara4"></div>
+      </div>
+
+      <!-- TEXTO DERECHA -->
+      <div class="text-column">
+        <p>
+          Soy <span class="name-vertical">Sara García Pastor</span>, estudiante del Grado en Diseño en la Universidad Complutense de Madrid.
+          Mi trabajo se centra en el diseño gráfico y editorial, la infografía y el diseño textil, combinando maquetación, edición fotográfica e iconografía.
+          Me interesa representar temas sociales, políticos y culturales desde un lenguaje visual directo, utilizando metáforas gráficas y sistemas claros de lectura.
+        </p>
+      </div>
+    </div>
+
+    <!-- TEXTO INFERIOR (SIN CAMBIOS) -->
+    <div class="bottom-text">
+      <p>
+        Paralelamente a mi formación, he desarrollado experiencia laboral en contextos de trabajo en equipo, atención al público
+        y producción, además de participar en un proyecto de voluntariado europeo centrado en actividades artísticas y comunitarias.
+        También he iniciado mi propio proyecto textil de ganchillo, enfocado en accesorios, lo que complementa mi perfil creativo
+        con una vertiente práctica y autogestionada.
+      </p>
+    </div>
+  </div>
+</main>
+
+<script>
+  /* NOTAS MUSICALES AL CLICK */
+  const notes = ["𝅘𝅥", "𝅘𝅥𝅮", "𝅘𝅥𝅯", "𝅘𝅥𝅰"];
+  document.addEventListener("click", (e) => {
+    const note = document.createElement("div");
+    note.className = "note";
+    note.textContent = notes[Math.floor(Math.random() * notes.length)];
+    note.style.left = e.pageX + "px";
+    note.style.top = e.pageY + "px";
+    note.style.fontSize = Math.floor(Math.random() * 20 + 14) + "px";
+    document.body.appendChild(note);
+    setTimeout(() => note.remove(), 1500);
+  });
+</script>
+
+</body>
+</html>

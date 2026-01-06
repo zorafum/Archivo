@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>archivo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    /* RESET */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Helvetica, Arial, sans-serif; }
+
+    body { background: white; color: black; overflow-x: hidden; cursor: default; }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      z-index: 100;
+    }
+
+    .logo { font-weight: 700; letter-spacing: 1px; line-height: 1; }
+
+    nav a {
+      margin-left: 30px;
+      font-weight: 300;
+      color: #FA7BB3;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+    nav a:hover { font-weight: 700; font-style: italic; }
+
+    /* HERO */
+    .hero { margin-top: 140px; padding: 40px; position: relative; }
+
+    .archivo-title {
+      font-size: 160px;
+      font-weight: 900;
+      line-height: 0.9;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-image {
+      width: 260px;
+      height: 260px;
+      position: absolute;
+      top: 140px;
+      left: 300px;
+      z-index: 0;
+    }
+    .hero-image img { width: 100%; height: 100%; object-fit: cover; }
+
+    .hero-info { margin-top: 80px; max-width: 520px; }
+    .hero-info h2 { font-size: 32px; font-weight: 700; margin-bottom: 10px; }
+    .hero-info p { font-size: 14px; font-weight: 300; line-height: 1.6; }
+
+    /* LINKS BAJO TEXTO */
+    .hero-links {
+      margin-top: 22px;
+      margin-left: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .hero-links a {
+      font-size: 14px;
+      font-family: "Comic Sans MS", Baskerville, 'Palatino Linotype', Palatino, 'Century Schoolbook L', 'Times New Roman', serif, "Segoe Script", cursive;
+      font-style: italic;
+      letter-spacing: 0.2px;
+      width: fit-content;
+      opacity: 0.95;
+    }
+    .hero-links a:hover {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* CAROUSEL (INDEX) */
+    .carousel { margin-top: 140px; padding: 40px; overflow: hidden; }
+
+    .carousel-track {
+      display: flex;
+      gap: 40px;
+      animation: scroll 25s linear infinite; /* MISMA VELOCIDAD */
+      will-change: transform;
+      width: max-content;
+    }
+
+    .carousel-item {
+      position: relative;
+      flex-shrink: 0;
+      cursor: pointer;
+      display: block;
+    }
+
+    .carousel-item img { width: 100%; height: 100%; object-fit: cover; }
+
+    .carousel-item span {
+      position: absolute;
+      bottom: -25px;
+      left: 0;
+      font-size: 12px;
+      font-weight: 300;
+    }
+    .carousel-item:hover span { font-weight: 700; font-style: italic; }
+
+    /* Scroll infinito real con distancia calculada (no depende de -50%) */
+    @keyframes scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(calc(-1 * var(--scroll-distance, 0px))); }
+    }
+
+    /* SARA4: rectángulo MUCHO más alto que ancho + deformación */
+    .carousel-item.sara4 {
+      width: 170px !important;
+      height: 520px !important;
+    }
+    .carousel-item.sara4 img {
+      object-fit: fill; /* deforma */
+    }
+
+    /* TEXTO FLOTANTE */
+    .floating-text {
+      position: absolute;
+      right: 40px;
+      top: 520px;
+      font-size: 12px;
+      font-weight: 300;
+      transform: rotate(-90deg);
+      opacity: 0.6;
+    }
+
+    /* NOTAS MUSICALES */
+    .note { position: absolute; pointer-events: none; animation: floatUp 1.5s ease-out forwards; color: black; }
+    @keyframes floatUp { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-40px); } }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .archivo-title { font-size: 80px; }
+      .hero-image { position: static; margin-top: 40px; }
+      .hero-links { margin-left: 20px; }
+
+      .carousel-item.sara4 {
+        width: 140px !important;
+        height: 440px !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">archivo</div>
+  <nav>
+    <a href="#">inicio</a>
+    <!-- IMPORTANTE: portfolio abre portfolio.html -->
+    <a href="portfolio.html">portfolio</a>
+    <a href="sobremi.html">sobre mí</a>
+    <a href="contacto.html">contacto</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1 class="archivo-title">archivo</h1>
+
+  <div class="hero-info">
+    <h2>diseño textil y gráfico</h2>
+    <p>
+      Me dedico a la dirección creativa, el diseño gráfico y la producción de contenidos visuales, desarrollando proyectos coherentes, divertidos y estéticamente sólidos.
+    </p>
+
+    <div class="hero-links">
+      <a href="https://saraga39.wixsite.com/contratame" target="_blank" rel="noopener noreferrer">
+        Contrátame · sobre los portfolios
+      </a>
+      <a href="https://www.instagram.com/pontekapuxa?igsh=YnV0b3B1anN3NzB0" target="_blank" rel="noopener noreferrer">
+        Catálogo Pontekapuxa
+      </a>
+      <a href="https://drive.google.com/drive/folders/1Qp6_z-sEuq0Boc6Xr2RJOBppNyzDvtOB?usp=sharing" target="_blank" rel="noopener noreferrer">
+        Memoria fotográfica · talleres de Safira
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="carousel">
+  <div class="carousel-track" id="carouselTrack">
+    <!-- Cada item lleva a una sección de portfolio.html (imagen y texto clicables porque todo es <a>) -->
+    <a class="carousel-item" href="portfolio.html#editorial">
+      <img src="images/sara1.png" alt="sara1">
+      <span>Editorial</span>
+    </a>
+
+    <a class="carousel-item" href="portfolio.html#infografia">
+      <img src="images/sara2.png" alt="sara2">
+      <span>Infografía</span>
+    </a>
+
+    <a class="carousel-item" href="portfolio.html#textil">
+      <img src="images/sara3.jpg" alt="sara3">
+      <span>Téxtil</span>
+    </a>
+
+    <!-- sara4 alto + deformado -->
+    <a class="carousel-item sara4" href="portfolio.html#mercadillo">
+      <img src="images/sara4.png" alt="sara4">
+      <span>Mercadillo</span>
+    </a>
+  </div>
+</section>
+
+<div class="floating-text">
+  archivo personal · proceso abierto · brutalismo editorial
+</div>
+
+<script>
+  /* NOTAS MUSICALES AL CLICK */
+  const notes = ["𝅘𝅥", "𝅘𝅥𝅮", "𝅘𝅥𝅯", "𝅘𝅥𝅰"];
+  document.addEventListener("click", (e) => {
+    const note = document.createElement("div");
+    note.className = "note";
+    note.textContent = notes[Math.floor(Math.random() * notes.length)];
+    note.style.left = e.pageX + "px";
+    note.style.top = e.pageY + "px";
+    note.style.fontSize = Math.floor(Math.random() * 20 + 14) + "px";
+    document.body.appendChild(note);
+    setTimeout(() => note.remove(), 1500);
+  });
+
+  /*
+    CARRUSEL INFINITO REAL:
+    - Duplicamos los items una vez (no hace falta que los dupliques a mano).
+    - Calculamos la distancia exacta que debe recorrer (ancho del “primer bloque”).
+    - Mantenemos duración 25s (misma velocidad que ya tenías).
+  */
+  const track = document.getElementById("carouselTrack");
+  const originalItems = Array.from(track.children);
+
+  // 1) Tamaños aleatorios SOLO a los que no sean sara4
+  originalItems.forEach(item => {
+    if (item.classList.contains("sara4")) return; // sara4 ya tiene tamaño fijo
+    const width = Math.floor(Math.random() * 180 + 260);
+    const height = Math.floor(Math.random() * 120 + 180);
+    item.style.width = width + "px";
+    item.style.height = height + "px";
+  });
+
+  // 2) Duplicar una vez para loop continuo
+  originalItems.forEach(item => {
+    track.appendChild(item.cloneNode(true));
+  });
+
+  // 3) Calcular la distancia (ancho total de los items originales + gaps)
+  function setScrollDistance() {
+    const gap = parseFloat(getComputedStyle(track).gap) || 0;
+    let total = 0;
+    for (let i = 0; i < originalItems.length; i++) {
+      total += originalItems[i].getBoundingClientRect().width;
+      if (i < originalItems.length - 1) total += gap;
+    }
+    // distancia que recorre: el bloque “original”
+    track.style.setProperty("--scroll-distance", total + "px");
+  }
+
+  // Esperar a que carguen imágenes (para medir bien)
+  window.addEventListener("load", setScrollDistance);
+  window.addEventListener("resize", setScrollDistance);
+</script>
+
+</body>
+</html>
